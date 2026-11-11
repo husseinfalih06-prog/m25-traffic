@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M25 traffic volume predictor</title>
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="demo-banner" class="demo-banner" hidden>
+    DEMO DATA: synthetic values for testing the interface. These are not WebTRIS observations or predictions from real counts.
+  </div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <h1>M25 traffic volume predictor</h1>
+    </div>
+    <p id="data-note" class="data-note" aria-live="polite">Loading data status…</p>
+    <button id="about-btn" class="btn ghost" type="button">About<span class="long"> the predictions</span></button>
+  </header>
+
+  <main>
+    <div id="map" aria-label="Map of traffic counting sites"></div>
+
+    <section class="controls card" aria-label="Search and filters">
+      <div class="search">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="search" type="search" placeholder="Search a road, site or place" autocomplete="off" aria-label="Search a road, site or place" aria-controls="search-results">
+      </div>
+      <ul id="search-results" class="search-results" role="listbox" hidden></ul>
+
+      <div class="row">
+        <label class="field">
+          <span>Date</span>
+          <input id="date" type="date">
+        </label>
+        <label class="field">
+          <span>Hour</span>
+          <select id="hour-select"></select>
+        </label>
+      </div>
+      <div class="row">
+        <label class="field">
+          <span>Road</span>
+          <select id="road-filter"><option value="">All roads</option></select>
+        </label>
+        <label class="field">
+          <span>Direction</span>
+          <select id="direction-filter"><option value="">All directions</option></select>
+        </label>
+      </div>
+      <p id="day-note" class="hint"></p>
+    </section>
+
+    <section class="legend card" aria-label="Legend">
+      <h2>Predicted vehicles per hour</h2>
+      <ul id="legend-list"></ul>
+      <p class="hint">Colours show how many vehicles are expected to pass the counting site. They do not show congestion or journey times.</p>
+    </section>
+
+    <section class="timebar card" aria-label="Time of day">
+      <button id="hour-prev" class="btn icon" type="button" aria-label="Previous hour">‹</button>
+      <div class="slider-wrap">
+        <input id="hour-slider" type="range" min="0" max="23" step="1" value="8" aria-label="Hour of day">
+        <div class="ticks" aria-hidden="true"><span>00</span><span>06</span><span>12</span><span>18</span><span>23</span></div>
+      </div>
+      <button id="hour-next" class="btn icon" type="button" aria-label="Next hour">›</button>
+      <output id="hour-label" class="hour-label" for="hour-slider"></output>
+    </section>
+
+    <aside id="panel" class="panel" aria-label="Site details" hidden>
+      <button id="panel-close" class="btn icon panel-close" type="button" aria-label="Close site details">×</button>
+      <div id="panel-body"></div>
+    </aside>
+
+    <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+  </main>
+
+  <dialog id="about" class="about">
+    <form method="dialog"><button class="btn icon about-close" aria-label="Close">×</button></form>
+    <div id="about-body"></div>
+  </dialog>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="vendor/chartjs/chart.umd.min.js"></script>
+  <script>window.TP_STATIC = true;</script>
+  <script src="app.js"></script>
+</body>
+</html>
